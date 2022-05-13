@@ -16,7 +16,7 @@ public class textLineNumbers extends javax.swing.JFrame {
      */
     public textLineNumbers() {
         initComponents();
-        TextLineNumber tln = new TextLineNumber(jTextPane1);
+        TextLineNumber tln = new TextLineNumber(textEditor);
         jScrollPane1.setRowHeaderView(tln);
     }
 
@@ -30,22 +30,29 @@ public class textLineNumbers extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        textEditor = new javax.swing.JTextPane();
         jToolBar1 = new javax.swing.JToolBar();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        charCount = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("orion IDE");
         setBackground(new java.awt.Color(51, 255, 0));
         setResizable(false);
 
-        jTextPane1.setBackground(new java.awt.Color(102, 153, 0));
-        jTextPane1.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
-        jScrollPane1.setViewportView(jTextPane1);
+        textEditor.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        textEditor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textEditorKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(textEditor);
+        textEditor.getAccessibleContext().setAccessibleName("editorText");
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -99,30 +106,54 @@ public class textLineNumbers extends javax.swing.JFrame {
         jButton2.getAccessibleContext().setAccessibleName("Ejecutar1");
         jButton2.getAccessibleContext().setAccessibleDescription("Ejecutar2");
 
+        jLabel2.setText("Caracteres:");
+
+        charCount.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(charCount, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(charCount))
+                .addContainerGap())
         );
 
         jToolBar1.getAccessibleContext().setAccessibleDescription("BarraDeHerramientas");
+        charCount.getAccessibleContext().setAccessibleName("charsCount");
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEditorKeyReleased
+        int count = textEditor.getText().length();
+        charCount.setText(Integer.toString(count));
+    }//GEN-LAST:event_textEditorKeyReleased
 
     /**
      * @param args the command line arguments
@@ -160,13 +191,15 @@ public class textLineNumbers extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel charCount;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextPane textEditor;
     // End of variables declaration//GEN-END:variables
 }
