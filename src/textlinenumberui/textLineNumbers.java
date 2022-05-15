@@ -8,6 +8,8 @@ package textlinenumberui;
 import utils.FileManager;
 import java.awt.Toolkit;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -239,7 +241,7 @@ public class textLineNumbers extends javax.swing.JFrame {
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("orion files", "orion"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("orion files", "on"));
 
         int response = fileChooser.showDialog(this, "Abrir archivo");
         if (response == JFileChooser.APPROVE_OPTION) {
@@ -265,19 +267,27 @@ public class textLineNumbers extends javax.swing.JFrame {
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Selecionar carpeta de destino");
-        fileChooser.setFileSelectionMode(JFileChooser.);
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
         int response = fileChooser.showSaveDialog(null);
         if (response == JFileChooser.APPROVE_OPTION) {
 
             String path = fileChooser.getSelectedFile().getAbsolutePath();
-            String pathNa = fileChooser.getSelectedFile().getName();
+            String fileName = fileChooser.getSelectedFile().getName();
 
-            System.out.print(fileManager.validateExistingFile(path));
-            System.out.print("\n");
-            System.out.print(path);
-            System.out.print("\n");
-            System.out.print(pathNa);
+            Pattern pattern = Pattern.compile("[A-Za-z0-9]+\\.on");
+            Matcher matcher = pattern.matcher(fileName);
+
+            if (!matcher.find()) {
+                JOptionPane.showMessageDialog(this, "Por favor, indique un nombre valido para el archivo e incluya la extension .on", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                if (fileManager.downloadFile(path, textEditor.getText())) {
+                    JOptionPane.showMessageDialog(this, "Ubicacion del archivo  " + path, "Archivo creado satisfactoriamente", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "El archivo no pudo ser creado", "Alerta", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
         }
     }//GEN-LAST:event_btnDownloadMouseClicked
 
