@@ -34,7 +34,7 @@
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
-              <EmptySpace pref="660" max="32767" attributes="0"/>
+              <EmptySpace pref="798" max="32767" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="charCount" min="-2" pref="44" max="-2" attributes="0"/>
@@ -165,6 +165,9 @@
               <Dimension value="[40, 40]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDownloadMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -180,7 +183,7 @@
         <Component class="javax.swing.JButton" name="btnBuild">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Resources/6378548_construction_diy_hammer_tool_icon.png"/>
+              <Image iconType="3" name="/Resources/hammer_tool_icon.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Compilar"/>
             <Property name="alignmentX" type="float" value="1.0"/>

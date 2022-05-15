@@ -5,16 +5,21 @@
  */
 package textlinenumberui;
 
+import utils.FileManager;
+import java.awt.Toolkit;
 import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 /**
  *
  * @author saliya
  */
 public class textLineNumbers extends javax.swing.JFrame {
-    
+
     private FileManager fileManager = new FileManager();
 
     /**
@@ -22,6 +27,7 @@ public class textLineNumbers extends javax.swing.JFrame {
      */
     public textLineNumbers() {
         initComponents();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/orion.png")));
         TextLineNumber tln = new TextLineNumber(textEditor);
         jScrollPane1.setRowHeaderView(tln);
     }
@@ -109,6 +115,11 @@ public class textLineNumbers extends javax.swing.JFrame {
         btnDownload.setMaximumSize(new java.awt.Dimension(40, 40));
         btnDownload.setMinimumSize(new java.awt.Dimension(40, 40));
         btnDownload.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnDownload.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDownloadMouseClicked(evt);
+            }
+        });
         ToolBar.add(btnDownload);
 
         jLabel1.setFont(new java.awt.Font("SimSun-ExtB", 0, 24)); // NOI18N
@@ -116,7 +127,7 @@ public class textLineNumbers extends javax.swing.JFrame {
         jLabel1.setMaximumSize(new java.awt.Dimension(12, 40));
         ToolBar.add(jLabel1);
 
-        btnBuild.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/6378548_construction_diy_hammer_tool_icon.png"))); // NOI18N
+        btnBuild.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/hammer_tool_icon.png"))); // NOI18N
         btnBuild.setToolTipText("Compilar");
         btnBuild.setAlignmentX(1.0F);
         btnBuild.setAlignmentY(1.0F);
@@ -157,7 +168,7 @@ public class textLineNumbers extends javax.swing.JFrame {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(660, Short.MAX_VALUE)
+                .addContainerGap(798, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(charCount, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,18 +229,21 @@ public class textLineNumbers extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     private void textEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEditorKeyReleased
         charCounter();
     }//GEN-LAST:event_textEditorKeyReleased
 
     private void btnUploadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUploadMouseClicked
-        
+
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("orion files", "orion"));
+
         int response = fileChooser.showDialog(this, "Abrir archivo");
         if (response == JFileChooser.APPROVE_OPTION) {
-            
+
             Map<String, String> result = fileManager.getFileContent(fileChooser.getSelectedFile().getAbsolutePath());
             if ("success".equals(result.get("result"))) {
                 textEditor.setText(result.get("payload"));
@@ -240,13 +254,33 @@ public class textLineNumbers extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUploadMouseClicked
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
-        
+
         boolean fileSaved = fileManager.saveFileContent(textEditor.getText());
         if (!fileSaved) {
             JOptionPane.showMessageDialog(this, "Error guardando el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveMouseClicked
-    
+
+    private void btnDownloadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDownloadMouseClicked
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecionar carpeta de destino");
+        fileChooser.setFileSelectionMode(JFileChooser.);
+
+        int response = fileChooser.showSaveDialog(null);
+        if (response == JFileChooser.APPROVE_OPTION) {
+
+            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            String pathNa = fileChooser.getSelectedFile().getName();
+
+            System.out.print(fileManager.validateExistingFile(path));
+            System.out.print("\n");
+            System.out.print(path);
+            System.out.print("\n");
+            System.out.print(pathNa);
+        }
+    }//GEN-LAST:event_btnDownloadMouseClicked
+
     private void charCounter() {
         int count = textEditor.getText().length();
         charCount.setText(Integer.toString(count));

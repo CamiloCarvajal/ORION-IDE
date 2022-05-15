@@ -1,7 +1,7 @@
 /*
 
  */
-package textlinenumberui;
+package utils;
 
 import java.io.*;
 import java.util.HashMap;
@@ -74,6 +74,16 @@ public class FileManager {
             return true;
         }
         return false;
+    }
+
+    public boolean validateExistingFile(String filePath) {
+
+        try {
+            return new File(filePath).isFile();
+        } catch (Exception e) {
+        }
+
+        return true;
     }
 
 }
