@@ -78,7 +78,7 @@ public class textLineNumbers extends javax.swing.JFrame {
         });
         ToolBar.add(btnUpload);
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/5925656_download_guardar_save_icon.png"))); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/download_guardar_save_icon.png"))); // NOI18N
         btnSave.setToolTipText("Guardar");
         btnSave.setAlignmentX(1.0F);
         btnSave.setAlignmentY(1.0F);
