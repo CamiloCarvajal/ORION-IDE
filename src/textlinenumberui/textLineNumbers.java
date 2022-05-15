@@ -265,7 +265,7 @@ public class textLineNumbers extends javax.swing.JFrame {
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Selecionar carpeta de destino");
-        fileChooser.setFileSelectionMode(JFileChooser.);
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
         int response = fileChooser.showSaveDialog(null);
         if (response == JFileChooser.APPROVE_OPTION) {
