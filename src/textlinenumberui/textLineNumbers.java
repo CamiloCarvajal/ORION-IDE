@@ -5,6 +5,9 @@
  */
 package textlinenumberui;
 
+import java.util.Map;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author saliya
@@ -31,18 +34,19 @@ public class textLineNumbers extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         textEditor = new javax.swing.JTextPane();
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        ToolBar = new javax.swing.JToolBar();
+        btnUpload = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnDownload = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnBuild = new javax.swing.JButton();
+        btnRun = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         charCount = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("orion IDE");
-        setBackground(new java.awt.Color(51, 255, 0));
+        setBackground(new java.awt.Color(153, 51, 0));
         setResizable(false);
 
         textEditor.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
@@ -54,86 +58,108 @@ public class textLineNumbers extends javax.swing.JFrame {
         jScrollPane1.setViewportView(textEditor);
         textEditor.getAccessibleContext().setAccessibleName("editorText");
 
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
+        ToolBar.setFloatable(false);
+        ToolBar.setRollover(true);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/files_folders_upload_icon.png"))); // NOI18N
-        jButton3.setAlignmentX(1.0F);
-        jButton3.setAlignmentY(1.0F);
-        jButton3.setFocusCycleRoot(true);
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setMaximumSize(new java.awt.Dimension(40, 40));
-        jButton3.setMinimumSize(new java.awt.Dimension(40, 40));
-        jButton3.setPreferredSize(new java.awt.Dimension(40, 40));
-        jToolBar1.add(jButton3);
+        btnUpload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/files_folders_upload_icon.png"))); // NOI18N
+        btnUpload.setToolTipText("Abrir");
+        btnUpload.setAlignmentX(1.0F);
+        btnUpload.setAlignmentY(1.0F);
+        btnUpload.setFocusCycleRoot(true);
+        btnUpload.setFocusable(false);
+        btnUpload.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUpload.setMaximumSize(new java.awt.Dimension(40, 40));
+        btnUpload.setMinimumSize(new java.awt.Dimension(40, 40));
+        btnUpload.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnUpload.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUploadMouseClicked(evt);
+            }
+        });
+        ToolBar.add(btnUpload);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/download_file_files_folders_icon.png"))); // NOI18N
-        jButton4.setAlignmentX(1.0F);
-        jButton4.setAlignmentY(1.0F);
-        jButton4.setFocusCycleRoot(true);
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setMaximumSize(new java.awt.Dimension(40, 40));
-        jButton4.setMinimumSize(new java.awt.Dimension(40, 40));
-        jButton4.setPreferredSize(new java.awt.Dimension(40, 40));
-        jToolBar1.add(jButton4);
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/5925656_download_guardar_save_icon.png"))); // NOI18N
+        btnSave.setToolTipText("Guardar");
+        btnSave.setAlignmentX(1.0F);
+        btnSave.setAlignmentY(1.0F);
+        btnSave.setFocusCycleRoot(true);
+        btnSave.setFocusable(false);
+        btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSave.setMaximumSize(new java.awt.Dimension(40, 40));
+        btnSave.setMinimumSize(new java.awt.Dimension(40, 40));
+        btnSave.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ToolBar.add(btnSave);
+
+        btnDownload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/download_file_files_folders_icon.png"))); // NOI18N
+        btnDownload.setToolTipText("Descargar");
+        btnDownload.setAlignmentX(1.0F);
+        btnDownload.setAlignmentY(1.0F);
+        btnDownload.setFocusCycleRoot(true);
+        btnDownload.setFocusable(false);
+        btnDownload.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDownload.setMaximumSize(new java.awt.Dimension(40, 40));
+        btnDownload.setMinimumSize(new java.awt.Dimension(40, 40));
+        btnDownload.setPreferredSize(new java.awt.Dimension(40, 40));
+        ToolBar.add(btnDownload);
 
         jLabel1.setFont(new java.awt.Font("SimSun-ExtB", 0, 24)); // NOI18N
         jLabel1.setText("|");
         jLabel1.setMaximumSize(new java.awt.Dimension(12, 40));
-        jToolBar1.add(jLabel1);
+        ToolBar.add(jLabel1);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/6378548_construction_diy_hammer_tool_icon.png"))); // NOI18N
-        jButton1.setAlignmentX(1.0F);
-        jButton1.setAlignmentY(1.0F);
-        jButton1.setFocusCycleRoot(true);
-        jButton1.setFocusPainted(false);
-        jButton1.setMaximumSize(new java.awt.Dimension(40, 40));
-        jButton1.setMinimumSize(new java.awt.Dimension(40, 40));
-        jButton1.setPreferredSize(new java.awt.Dimension(40, 40));
-        jToolBar1.add(jButton1);
-        jButton1.getAccessibleContext().setAccessibleName("Compilar");
+        btnBuild.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/6378548_construction_diy_hammer_tool_icon.png"))); // NOI18N
+        btnBuild.setToolTipText("Compilar");
+        btnBuild.setAlignmentX(1.0F);
+        btnBuild.setAlignmentY(1.0F);
+        btnBuild.setFocusCycleRoot(true);
+        btnBuild.setFocusPainted(false);
+        btnBuild.setMaximumSize(new java.awt.Dimension(40, 40));
+        btnBuild.setMinimumSize(new java.awt.Dimension(40, 40));
+        btnBuild.setPreferredSize(new java.awt.Dimension(40, 40));
+        ToolBar.add(btnBuild);
+        btnBuild.getAccessibleContext().setAccessibleName("Compilar");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/play.png"))); // NOI18N
-        jButton2.setAlignmentX(1.0F);
-        jButton2.setAlignmentY(1.0F);
-        jButton2.setFocusCycleRoot(true);
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
-        jButton2.getAccessibleContext().setAccessibleName("Ejecutar1");
-        jButton2.getAccessibleContext().setAccessibleDescription("Ejecutar2");
+        btnRun.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/play.png"))); // NOI18N
+        btnRun.setToolTipText("Ejecutar");
+        btnRun.setAlignmentX(1.0F);
+        btnRun.setAlignmentY(1.0F);
+        btnRun.setFocusCycleRoot(true);
+        btnRun.setFocusable(false);
+        btnRun.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRun.setMaximumSize(new java.awt.Dimension(40, 40));
+        btnRun.setMinimumSize(new java.awt.Dimension(40, 40));
+        btnRun.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnRun.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ToolBar.add(btnRun);
+        btnRun.getAccessibleContext().setAccessibleName("Ejecutar1");
+        btnRun.getAccessibleContext().setAccessibleDescription("Ejecutar2");
 
         jLabel2.setText("Caracteres:");
 
         charCount.setText("0");
+        charCount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                .addContainerGap()
+                .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(660, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(charCount, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
+            .addComponent(ToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
@@ -143,17 +169,12 @@ public class textLineNumbers extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jToolBar1.getAccessibleContext().setAccessibleDescription("BarraDeHerramientas");
+        ToolBar.getAccessibleContext().setAccessibleDescription("BarraDeHerramientas");
         charCount.getAccessibleContext().setAccessibleName("charsCount");
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void textEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEditorKeyReleased
-        int count = textEditor.getText().length();
-        charCount.setText(Integer.toString(count));
-    }//GEN-LAST:event_textEditorKeyReleased
 
     /**
      * @param args the command line arguments
@@ -190,16 +211,42 @@ public class textLineNumbers extends javax.swing.JFrame {
         });
     }
 
+
+    private void textEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEditorKeyReleased
+        charCounter();
+    }//GEN-LAST:event_textEditorKeyReleased
+
+    private void btnUploadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUploadMouseClicked
+
+        JFileChooser fileChooser = new JFileChooser();
+        int response = fileChooser.showDialog(this, "Abrir archivo");
+        if (response == JFileChooser.APPROVE_OPTION) {
+            FileManager fm = new FileManager();
+            Map<String, String> result = fm.getFileContent(fileChooser.getSelectedFile().getAbsolutePath());
+            if ("success".equals(result.get("result"))) {
+                textEditor.setText(result.get("payload"));
+                charCounter();
+            }
+        }
+
+    }//GEN-LAST:event_btnUploadMouseClicked
+
+    private void charCounter() {
+        int count = textEditor.getText().length();
+        charCount.setText(Integer.toString(count));
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToolBar ToolBar;
+    private javax.swing.JButton btnBuild;
+    private javax.swing.JButton btnDownload;
+    private javax.swing.JButton btnRun;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnUpload;
     private javax.swing.JLabel charCount;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextPane textEditor;
     // End of variables declaration//GEN-END:variables
 }
