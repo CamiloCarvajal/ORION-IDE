@@ -63,6 +63,7 @@ public class FileManager {
                 writer = new BufferedWriter(new FileWriter(this.filePath));
                 writer.write(content);
             } catch (Exception e) {
+                return false;
             } finally {
                 try {
                     if (writer != null) {
@@ -74,6 +75,26 @@ public class FileManager {
             return true;
         }
         return false;
+    }
+
+    public boolean downloadFile(String filePath, String content) {
+
+        try {
+            if (this.filePath == null) {
+                this.filePath = filePath;
+            }
+
+            if (!validateExistingFile(filePath)) {
+
+                File myObj = new File(filePath);
+                System.out.println("File created: " + myObj.getName());
+            }
+            
+            return saveFileContent(content);
+        } catch (Exception e) {
+
+        }
+        return true;
     }
 
     public boolean validateExistingFile(String filePath) {
