@@ -7,12 +7,15 @@ package textlinenumberui;
 
 import java.util.Map;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author saliya
  */
 public class textLineNumbers extends javax.swing.JFrame {
+    
+    private FileManager fileManager = new FileManager();
 
     /**
      * Creates new form textLineNumbers
@@ -89,6 +92,11 @@ public class textLineNumbers extends javax.swing.JFrame {
         btnSave.setMinimumSize(new java.awt.Dimension(40, 40));
         btnSave.setPreferredSize(new java.awt.Dimension(40, 40));
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSaveMouseClicked(evt);
+            }
+        });
         ToolBar.add(btnSave);
 
         btnDownload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/download_file_files_folders_icon.png"))); // NOI18N
@@ -210,19 +218,19 @@ public class textLineNumbers extends javax.swing.JFrame {
             }
         });
     }
-
+    
 
     private void textEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEditorKeyReleased
         charCounter();
     }//GEN-LAST:event_textEditorKeyReleased
 
     private void btnUploadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUploadMouseClicked
-
+        
         JFileChooser fileChooser = new JFileChooser();
         int response = fileChooser.showDialog(this, "Abrir archivo");
         if (response == JFileChooser.APPROVE_OPTION) {
-            FileManager fm = new FileManager();
-            Map<String, String> result = fm.getFileContent(fileChooser.getSelectedFile().getAbsolutePath());
+            
+            Map<String, String> result = fileManager.getFileContent(fileChooser.getSelectedFile().getAbsolutePath());
             if ("success".equals(result.get("result"))) {
                 textEditor.setText(result.get("payload"));
                 charCounter();
@@ -231,6 +239,14 @@ public class textLineNumbers extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnUploadMouseClicked
 
+    private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
+        
+        boolean fileSaved = fileManager.saveFileContent(textEditor.getText());
+        if (!fileSaved) {
+            JOptionPane.showMessageDialog(this, "Error guardando el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSaveMouseClicked
+    
     private void charCounter() {
         int count = textEditor.getText().length();
         charCount.setText(Integer.toString(count));

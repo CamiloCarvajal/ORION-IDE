@@ -12,6 +12,8 @@ import java.util.Map;
  */
 public class FileManager {
 
+    private String filePath;
+
     /**
      * Open a file and extract its content
      *
@@ -21,16 +23,18 @@ public class FileManager {
     public Map<String, String> getFileContent(String filePath) {
 
         String text = "";
+        BufferedReader reader = null;
         Map<String, String> map = new HashMap<String, String>();
 
         try {
             String fileContent;
             map.put("result", "success");
             File file = new File(filePath);
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            //Read every line of the file
+            reader = new BufferedReader(new FileReader(file));
+            this.filePath = filePath;
 
-            while ((fileContent = br.readLine()) != null) {
+            //Read every line of the file
+            while ((fileContent = reader.readLine()) != null) {
                 text += fileContent + "\n";
             }
             map.put("payload", text);
@@ -39,8 +43,37 @@ public class FileManager {
             //There are an error
             map.put("result", "fail");
             map.put("payload", e.getMessage());
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+            }
         }
         return map;
+    }
+
+    public boolean saveFileContent(String content) {
+
+        if (this.filePath != null) {
+
+            BufferedWriter writer = null;
+            try {
+                writer = new BufferedWriter(new FileWriter(this.filePath));
+                writer.write(content);
+            } catch (Exception e) {
+            } finally {
+                try {
+                    if (writer != null) {
+                        writer.close();
+                    }
+                } catch (IOException e) {
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
 }
